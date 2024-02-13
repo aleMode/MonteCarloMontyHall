@@ -39,18 +39,16 @@ def monty_hall_simulation(num_simulations, switch_percentage, result_queue):
 
 def parallel_monty_hall(num_simulations, switch_percentage, num_processes):
     result_queue = multiprocessing.Queue()  # Coda per i risultati
-    processes = []
+    pool = multiprocessing.Pool()
+    
     for i in range(0,1001):
-        process = multiprocessing.Process(
-            target=monty_hall_simulation, 
+        pool.apply_async(
+            monty_hall_simulation, 
             args=(num_simulations, i/1000, result_queue)
             )
-        processes.append(process)
-        process.start()
-
-
-    for process in processes:
-        process.join()  # Aspetta che tutti i processi terminino
+    
+    pool.close()
+    pool.join()
 
     all_results = []
     while not result_queue.empty():

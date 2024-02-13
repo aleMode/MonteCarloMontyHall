@@ -20,6 +20,12 @@ def switch(porta_premio, porta_giocatore, n):
                 return False
             else:
                 return True
+        else:
+            if porta_premio == porta_giocatore:
+                return True
+            else:
+                return False
+
 
 def MonteCarlo(n):
     ripetizioni = 1000000
@@ -41,8 +47,8 @@ def MonteCarlo(n):
 def faiMC():
     with open("montecarlo_log.txt", "w") as f:
     # Itera su tutti i valori da 0 a 1 con passo 0.1
-        for n in range(0, 10001):
-            n = n / 10000  # Converti l'indice in un valore compreso tra 0 e 1
+        for n in range(0, 11):
+            n = n / 10  # Converti l'indice in un valore compreso tra 0 e 1
             rateo = MonteCarlo(n)  # Esegui la simulazione con il valore corrente di n
             f.write(f"n={n:.6f}: Rateo di vittoria={rateo:.6f}\n")
 

@@ -1,5 +1,7 @@
 import random
 
+from matplotlib import pyplot as plt
+
 def random_choice():
     #Restituisce una scelta casuale tra 0, 1 e 2
     return random.randint(0, 2)
@@ -20,14 +22,12 @@ def switch(porta_premio, porta_giocatore, n):
                 return True
 
 def MonteCarlo(n):
-    ripetizioni = 1000000000
+    ripetizioni = 1000000
     vittorie = 0
 
     print("\n-----------------------------------------------------------------------------------------------")
     print("Eseguendo la simulazione con ", ripetizioni, " ripetizioni e probabilità di cambiare pari a ", n)
     for i in range(ripetizioni):
-        if i%1000000 == 0:
-            print("iterazione: ", i)
         scelta_premio = random_choice()
         scelta_giocatore = random_choice()
         if switch(scelta_premio, scelta_giocatore, n):
@@ -38,11 +38,36 @@ def MonteCarlo(n):
     print("-----------------------------------------------------------------------------------------------")
     return rateo
 
-with open("montecarlo_log.txt", "w") as f:
-# Itera su tutti i valori da 0 a 1 con passo 0.1
-    for n in range(0, 11):
-        n = n / 10  # Converti l'indice in un valore compreso tra 0 e 1
-        rateo = MonteCarlo(n)  # Esegui la simulazione con il valore corrente di n
-        f.write(f"n={n:.1f}: Rateo di vittoria={rateo:.6f}\n")
+def faiMC():
+    with open("montecarlo_log.txt", "w") as f:
+    # Itera su tutti i valori da 0 a 1 con passo 0.1
+        for n in range(0, 1001):
+            n = n / 1000  # Converti l'indice in un valore compreso tra 0 e 1
+            rateo = MonteCarlo(n)  # Esegui la simulazione con il valore corrente di n
+            f.write(f"n={n:.1f}: Rateo di vittoria={rateo:.6f}\n")
 
-#MonteCarlo()
+def plottaMC():
+    # Leggi il file e ottieni le probabilità di switch e i ratei di vittoria
+    switch_probabilities = []
+    win_rates = []
+
+    with open('montecarlo_log.txt', 'r') as file:
+        for line in file:
+            switch_prob, win_rate = line.strip().split(': ')
+            switch_probabilities.append(float(switch_prob.split('=')[1]))
+            win_rates.append(float(win_rate.split('=')[1]))
+
+    # Crea il plot
+    plt.plot(switch_probabilities, win_rates, marker='o', linestyle='-')
+
+    # Etichette degli assi e titolo
+    plt.xlabel('Probabilità di switch')
+    plt.ylabel('Rateo di vittoria')
+    plt.title('Rateo di vittoria in base alla probabilità di switch')
+
+    # Mostra il plot
+    plt.grid(True)
+    plt.show()
+
+faiMC()
+plottaMC()

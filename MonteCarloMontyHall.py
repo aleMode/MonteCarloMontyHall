@@ -44,11 +44,11 @@ def MonteCarlo(n):
     print("-----------------------------------------------------------------------------------------------")
     return rateo
 
-def faiMC():
+def MCripetuto():
     with open("montecarlo_log.txt", "w") as f:
     # Itera su tutti i valori da 0 a 1 con passo 0.1
-        for n in range(0, 11):
-            n = n / 10  # Converti l'indice in un valore compreso tra 0 e 1
+        for n in range(0, 1001):
+            n = n / 1000  # Converti l'indice in un valore compreso tra 0 e 1
             rateo = MonteCarlo(n)  # Esegui la simulazione con il valore corrente di n
             f.write(f"n={n:.6f}: Rateo di vittoria={rateo:.6f}\n")
 
@@ -75,5 +75,5 @@ def plottaMC():
     plt.grid(True)
     plt.show()
 
-faiMC()
+MCripetuto()
 plottaMC()

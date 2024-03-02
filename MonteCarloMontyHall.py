@@ -67,13 +67,13 @@ def plottaMC():
     plt.plot(switch_probabilities, win_rates, marker='o', linestyle='-')
 
     # Etichette degli assi e titolo
-    plt.xlabel('Probabilità di switch')
-    plt.ylabel('Rateo di vittoria')
-    plt.title('Rateo di vittoria in base alla probabilità di switch')
+    plt.xlabel('Probabilità di switch', fontsize = 18)
+    plt.ylabel('Rateo di vittoria', fontsize = 18)
+    plt.title('Rateo di vittoria in base alla probabilità di switch', fontsize = 18)
 
     # Mostra il plot
     plt.grid(True)
     plt.show()
 
-MCripetuto()
+#MCripetuto()
 plottaMC()
